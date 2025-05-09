@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+ <head>
+  <meta charset="UTF-8">
+  <title>Patel Set 01</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <style>
+html {
+  background-color: #e6f2ff;
+}
+   :root {
+/*    --bg-color: #f0f2f5;*/
+    --container-bg: #ffffff;
+    --text-color: #333;
+    --accent-color: #007bff;
+    --hover-color: #0056b3;
+   }
+
+   body.dark {
+    --bg-color: #1e1e1e;
+    --container-bg: #2c2c2c;
+    --text-color: #f0f0f0;
+    --accent-color: #4dabf7;
+    --hover-color: #1c7ed6;
+   }
+
+   * {
+    box-sizing: border-box;
+   }
+
+body {
+  font-family: Arial, sans-serif;
+  color: var(--text-color);
+  padding: 20px 20px 0 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+
+
+   .setup-container, .container {
+    max-width: 900px;
+    margin: auto;
+    background: var(--container-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+   }
+
+   h2 {
+    text-align: center;
+   }
+
+   .input-group {
+    margin-bottom: 20px;
+   }
+
+   .input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+   }
+
+   .input-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+   }
+
+   .timer {
+    text-align: right;
+    color: #d9534f;
+    font-weight: bold;
+    margin-bottom: 10px;
+   }
+
+   .progress-container {
+    width: 100%;
+    background-color: #ddd;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 20px;
+   }
+
+   .progress-bar {
+    height: 100%;
+    width: 100%;
+    background-color: #28a745;
+    transition: width 1s linear;
+   }
+
+   .question {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    transition: all 0.3s ease;
+   }
+
+   .question p {
+    font-weight: bold;
+    color: #3399FF;
+
+   }
+
+   label {
+    display: block;
+    margin: 5px 0;
+    cursor: pointer;
+    color: green;
+   }
+
+   input[type="radio"] {
+    margin-right: 8px;
+   }
+
+   button {
+    background: var(--accent-color);
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    width: 100%;
+   }
+
+   button:hover {
+    background-color: var(--hover-color);
+   }
+
+   #result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+   }
+
+   /*    .logo {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   max-height: 50px;
+   }*/
+
+   .dark-toggle {
+    text-align: right;
+    margin-bottom: 10px;
+    max-width: 10%;
+   }
+
+   .setup-container input[type="text"],
+   .setup-container input[type="email"] {
+    width: 300px;     /* wider */
+    height: 40px;     /* taller */
+    font-size: 16px;  /* more readable */
+    padding: 5px 10px;
+    margin-bottom: 15px;
+   }
+   .size {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+   }
+  <style>
+    /* ... existing styles ... */
+
+    @media (max-width: 600px) {
+      button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+
+      .setup-container input[type="text"],
+      .setup-container input[type="email"] {
+        font-size: 14px;
+        height: 36px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      .marquee-footer {
+        font-size: 14px;
+        text-align: center;
+        padding: 10px;
+      }
+    }
+  </style>
+
+  </style>
+ </head>
+
+ <body>
+  <div class="dark-toggle" style="visibility: hidden;">
+   <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  </div>
+
+<div class="setup-container" id="setup-section" style="position: relative;">
+  <div style="position: absolute; top: 10px; right: 15px;">
+    <img src="logo2.png" alt="Secondary Logo" style="max-height: 40px;">
+  </div>
+  <h3 style="text-align: center"><a href="http://www.patelgtech.com">www.patelgtech.com</a></h3>
+   <form id="setupForm">
+    <label for="candidateName" class="size">Name:*</label>
+    <input type="text" id="candidateName" name="candidateName" required>
+
+    <label for="candidateEmail" class="size">Email:*</label>
+    <input type="email" id="candidateEmail" name="candidateEmail" required>
+
+    <button type="button" id="startQuiz" onclick="startQuiz()" style="font-weight: bold;">Click to Start</button>
+   </form>
+
+  </div>
+  <div id="quiz-content" style="display: none;">
+   <div class="container">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+     <h2 style="margin: 0;text-align: left;"><u>Answer the Below Questions</u></h2>
+     <img src="your-logo.png" alt="Quiz Logo" class="logo" style="max-height: 50px;">
+    </div>
+    <p>&#x00A0;</p>
+    <div class="timer" id="timer">Time left:</div>
+    <div class="progress-container">
+     <div id="progressBar" class="progress-bar"></div>
+    </div>
+    <form id="quizForm">
+     <div id="quizContainer"></div>
+     <button type="submit" style="font-weight: bold;">Submit Your Answer</button>
+    </form>
+    <div id="result"></div>
+   </div>
+  </div>
+<script>
+  const questions = [
+   // General Knowledge
+   { q: "1. You receive an email asking for your bank password to “verify your account.” What should you do?", options: ["Reply with the password", "Call your bank", "Click the link and log in", "Mark it as spam and delete it"], answer: 4 },
+   { q: "2. You’re stuck in traffic and getting late. What’s the most logical thing to do?", options: ["Honk constantly", "Take the wrong lane", "Stay calm and inform whoever is waiting", "Abandon your vehicle"], answer: 3 },
+   { q: "3. Which is the best way to create a strong password?", options: ["Your birthdate", "Your name + 123", "A mix of letters, numbers, and symbols", "Your phone number"], answer: 3 },
+   { q: "4. Which of these would best help you track your monthly spending?", options: ["Cash only", "Excel or a budgeting app", "Buying randomly", "Relying on memory"], answer: 2 },
+   { q: "5. A person on a video call has a blurry camera. What’s the first thing they should do?", options: ["Reboot the PC", "Wipe the lens", "Change device", "Yell at the internet provider"], answer: 2 },
+
+  // W3Schools Standards
+   { q: "6. According to W3Schools, what is the latest version of HTML?", options: ["HTML4", "HTML5", "XHTML", "HTML6"], answer: 1 },
+   { q: "7. Which of the following is NOT a semantic element in HTML5, according to W3Schools?", options: ["&lt;article&gt;", "&lt;div&gt;", "&lt;section&gt;", "&lt;nav&gt;"], answer: 1 },
+   { q: "8. What does CSS stand for, as per W3Schools?", options: ["Creative Style Sheets", "Computer Style Sheets", "Cascading Style Sheets", "Colorful Style Sheets"], answer: 2 },
+   { q: "9. Which JavaScript method is used to select the first element with a specified class?", options: ["getElementByClass", "querySelectorAll", "getElementByClassName", "querySelector"], answer: 3 },
+   { q: "10. What is the purpose of the 'alt' attribute in an &lt;img&gt; tag, according to W3Schools?", options: ["Defines the alignment of the image", "Provides an alternative text for the image", "Sets the image's size", "Specifies the image's source"], answer: 1 }, // IDPF Guidelines
+
+  // IDPF Guidelines
+   { q: "11. What does IDPF stand for?", options: ["Internet Digital Publishing Forum", "International Digital Publishing Format", "International Digital Publishing Forum", "Internet Design and Publishing Forum"], answer: 2 },
+   { q: "12. Which format is the IDPF's global standard for eBooks?", options: ["PDF", "MOBI", "EPUB", "AZW"], answer: 2 },
+   { q: "13. According to IDPF, what is a key benefit of EPUB?", options: ["Fixed layout", "Reflowable content", "DRM-free", "Limited text formatting"], answer: 2 },
+   { q: "14. Which technology is fundamental to the structure of EPUB files?", options: ["CSS", "JavaScript", "XML", "PHP"], answer: 3 },
+   { q: "15. What is the purpose of the OPF file in an EPUB package, according to IDPF?", options: ["Contains the book's cover image", "Defines the book's metadata", "Stores the main content", "Handles navigation"], answer: 1 }, // Newspaper Layout and Alignment Principles
+
+  // Newspaper Layout and Alignment Principles
+   { q: "16. What is the term for the vertical columns of text in a newspaper?", options: ["Rows", "Sections", "Columns", "Gutters"], answer: 2 },
+   { q: "17. Which layout principle involves arranging elements to create a visual hierarchy?", options: ["Symmetry", "Balance", "Emphasis", "Proximity"], answer: 2 },
+   { q: "18. What is the purpose of a 'gutter' in newspaper layout?", options: ["To add color", "To separate columns of text", "To create headings", "To hold images"], answer: 1 },
+   { q: "19. Which alignment is typically used for the main body of text in a newspaper?", options: ["Center", "Right", "Justified", "Left"], answer: 3 },
+   { q: "20. What does 'above the fold' refer to in newspaper design?", options: ["The oldest news", "The most important section", "The top half of the front page", "The sports section"], answer: 2 }, // HTML and XML Technologies
+
+  // HTML and XML Technologies
+   { q: "21. Which tag is used to create a hyperlink in HTML?", options: ["&lt;link&gt;", "&lt;href&gt;", "&lt;a&gt;", "&lt;url&gt;"], answer: 2 },
+   { q: "22. What does XML stand for?", options: ["eXtensible Markup Language", "eXecutable Markup Language", "eXtra Markup Language", "eXciting Markup Language"], answer: 0 },
+   { q: "23. In XML, what is used to define the structure of a document?", options: ["DTD or XML Schema", "CSS", "JavaScript", "HTML"], answer: 0 },
+   { q: "24. Which HTML tag is used to embed an image?", options: ["&lt;image&gt;", "&lt;pic&gt;", "&lt;img&gt;", "&lt;picture&gt;"], answer: 2 },
+   { q: "25. Which of the following is a self-closing tag in HTML?", options: ["&lt;div&gt;", "&lt;p&gt;", "&lt;br&gt;", "&lt;a&gt;"], answer: 2 }
+  ];
+  const quizContainer = document.getElementById('quizContainer');
+
+  document.getElementById("quizForm").addEventListener("submit", function (e) {
+   e.preventDefault(); // Prevent the default form submission
+
+   // Check if all questions have an answer
+   let allAnswered = true;
+   questions.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!selected) {
+     allAnswered = false;
+     alert(`Please answer question ${i + 1}.`); // Show the popup
+     return; // Exit the forEach loop early as we found an unanswered question
+    }
+   });
+
+   // If not all questions are answered, stop the submission here
+   if (!allAnswered) {
+    return;
+   }
+
+   clearInterval(timer); // Stop the timer
+
+   const name = document.getElementById("candidateName").value.trim();
+   const email = document.getElementById("candidateEmail").value.trim();
+   let score = 0;
+   const answers = [];
+
+   questions.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    const selectedValue = selected ? parseInt(selected.value) : -1;
+    if (selectedValue === q.answer) score++;
+    answers.push({
+     Question: q.q,
+     Selected: selected ? q.options[selectedValue] : "No answer",
+     Correct: q.options[q.answer],
+     IsCorrect: selectedValue === q.answer ? "Yes" : "No"
+    });
+   });
+
+   document.getElementById("result").textContent = "Thank You!";
+   setTimeout(() => {
+    window.location.href = "https://www.google.com";
+   }, 3000); // Redirect after 3 seconds
+
+   const data = [
+    {
+     Name: name,
+     Email: email,
+     Score: `${score}/${questions.length}`,
+     Timestamp: new Date().toLocaleString()
+    },
+    ...answers
+   ];
+
+   const worksheet = XLSX.utils.json_to_sheet(data, {
+    skipHeader: false
+   });
+   const workbook = XLSX.utils.book_new();
+   XLSX.utils.book_append_sheet(workbook, worksheet, "Quiz Results");
+
+   // Save the Excel file to the specified path
+   const path = 'Result_' + name.replace(/\s+/g, "_") + '.xlsx';
+   XLSX.writeFile(workbook, path);
+  });
+
+  function toggleDarkMode() {
+   document.body.classList.toggle("dark");
+  }
+
+  let timer;
+  let totalSeconds = 15 * 60; // Default to 15 minutes
+  let remainingSeconds = totalSeconds;
+
+  function startTimer() {
+   timer = setInterval(() => {
+    remainingSeconds--;
+
+    const minutes = Math.floor(remainingSeconds / 60);
+    const seconds = remainingSeconds % 60;
+
+    document.getElementById("timer").textContent = `Time left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+    const progress = (remainingSeconds / totalSeconds) * 100;
+    document.getElementById("progressBar").style.width = `${progress}%`;
+
+    if (remainingSeconds <= 0) {
+     clearInterval(timer);
+     document.getElementById("quizForm").submit(); // Auto-submit
+    }
+   }, 1000);
+  }
+
+  document.getElementById("startQuiz").addEventListener("click", function () {
+   const name = document.getElementById("candidateName").value.trim();
+   const email = document.getElementById("candidateEmail").value.trim();
+
+   if (!name || !email) {
+    alert("Please enter your name and email before starting the quiz.");
+    return;
+   }
+
+   // Hide setup and show quiz
+   document.querySelector(".setup-container").style.display = "none";
+   document.getElementById("quiz-content").style.display = "block";
+
+   // Populate quiz questions dynamically
+   quizContainer.innerHTML = '';  // Clear any previous content
+   questions.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'question';
+    div.innerHTML = `<p>${q.q}</p>` + q.options.map((opt, j) => `
+    <label><input type="radio" name="q${i}" value="${j}">${opt}</label>`).join('');
+    quizContainer.appendChild(div);
+   });
+
+   startTimer();
+  });
+
+
+  window.addEventListener("beforeunload", function (e) {
+   e.preventDefault();
+   e.returnValue = "";
+  });
+
+ // Define the unload warning function
+  function unloadWarning(e) {
+   e.preventDefault();
+   e.returnValue = '';
+  }
+
+  // Enable warning on page unload (refresh, close, etc.)
+  window.addEventListener("beforeunload", unloadWarning);
+ </script>
+<marquee behavior="scroll" direction="left"
+ style="position: fixed; bottom: 0; left: 0; width: 100%; background: #007bff; color: white; padding: 10px; font-weight: bold; z-index: 9999; margin: 0;">
+  © 2025 PatelGTech. All rights reserved.            © 2025 PatelGTech Llp. All rights reserved.            © 2025 PatelGTech Llp. All rights reserved.            © 2025 PatelGTech Llp. All rights reserved.
+</marquee>
+ </body>
+
+</html>
