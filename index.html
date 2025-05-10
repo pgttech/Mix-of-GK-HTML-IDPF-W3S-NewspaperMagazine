@@ -338,7 +338,7 @@ body {
    XLSX.utils.book_append_sheet(workbook, worksheet, "Quiz Results");
 
    // Save the Excel file to the specified path
-   const path = 'Result_Mix_of_GK_HTML_IDPF_W3S_NewspaperMagazine' + name.replace(/\s+/g, "_") + '.xlsx';
+   const path = 'Result_Mix_of_GK_HTML_IDPF_W3S_NewspaperMagazine_' + name.replace(/\s+/g, "_") + '.xlsx';
    XLSX.writeFile(workbook, path);
   });
 
