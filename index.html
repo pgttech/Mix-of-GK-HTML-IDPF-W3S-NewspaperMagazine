@@ -170,8 +170,7 @@ body {
     margin-bottom: 5px;
     font-weight: bold;
    }
-  <style>
-    /* ... existing styles ... */
+      /* ... existing styles ... */
 
     @media (max-width: 600px) {
       button {
@@ -266,8 +265,8 @@ body {
    { q: "16. What is the term for the vertical columns of text in a newspaper?", options: ["Rows", "Sections", "Columns", "Gutters"], answer: 2 },
    { q: "17. Which layout principle involves arranging elements to create a visual hierarchy?", options: ["Symmetry", "Balance", "Emphasis", "Proximity"], answer: 2 },
    { q: "18. What is the purpose of a 'gutter' in newspaper layout?", options: ["To add color", "To separate columns of text", "To create headings", "To hold images"], answer: 1 },
-   { q: "19. Which alignment is typically used for the main body of text in a newspaper?", options: ["Center", "Right", "Justified", "Left"], answer: 3 },
-   { q: "20. What does 'above the fold' refer to in newspaper design?", options: ["The oldest news", "The most important section", "The top half of the front page", "The sports section"], answer: 2 }, // HTML and XML Technologies
+   { q: "19. Which alignment is typically used for the main body of text in a newspaper?", options: ["Center", "Right", "Justified", "Left"], answer: 2 },
+   { q: "20. What does 'above the fold' refer to in newspaper design?", options: ["The oldest news", "The most important section", "The top half of the front page", "The sports section"], answer: 2 },
 
   // HTML and XML Technologies
    { q: "21. Which tag is used to create a hyperlink in HTML?", options: ["&lt;link&gt;", "&lt;href&gt;", "&lt;a&gt;", "&lt;url&gt;"], answer: 2 },
@@ -338,7 +337,7 @@ body {
    XLSX.utils.book_append_sheet(workbook, worksheet, "Quiz Results");
 
    // Save the Excel file to the specified path
-   const path = 'Result_Mix_of_GK_HTML_IDPF_W3S_NewspaperMagazine_' + name.replace(/\s+/g, "_") + '.xlsx';
+   const path = 'Result_Mix_of_GK_HTML_IDPF_W3S_NewspaperMagazine' + name.replace(/\s+/g, "_") + '.xlsx';
    XLSX.writeFile(workbook, path);
   });
 
